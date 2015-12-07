@@ -5,6 +5,8 @@
  */
 package com.ec.entidades;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -15,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByContrasenaUsuario", query = "SELECT u FROM Usuario u WHERE u.contrasenaUsuario = :contrasenaUsuario"),
     @NamedQuery(name = "Usuario.findByCedulaUsuario", query = "SELECT u FROM Usuario u WHERE u.cedulaUsuario = :cedulaUsuario")})
 public class Usuario implements Serializable {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,7 +73,9 @@ public class Usuario implements Serializable {
     }
 
     public void setIdUsuario(Integer idUsuario) {
+        Integer oldIdUsuario = this.idUsuario;
         this.idUsuario = idUsuario;
+        changeSupport.firePropertyChange("idUsuario", oldIdUsuario, idUsuario);
     }
 
     public String getNombreUsuario() {
@@ -75,7 +83,9 @@ public class Usuario implements Serializable {
     }
 
     public void setNombreUsuario(String nombreUsuario) {
+        String oldNombreUsuario = this.nombreUsuario;
         this.nombreUsuario = nombreUsuario;
+        changeSupport.firePropertyChange("nombreUsuario", oldNombreUsuario, nombreUsuario);
     }
 
     public String getContrasenaUsuario() {
@@ -83,7 +93,9 @@ public class Usuario implements Serializable {
     }
 
     public void setContrasenaUsuario(String contrasenaUsuario) {
+        String oldContrasenaUsuario = this.contrasenaUsuario;
         this.contrasenaUsuario = contrasenaUsuario;
+        changeSupport.firePropertyChange("contrasenaUsuario", oldContrasenaUsuario, contrasenaUsuario);
     }
 
     public String getCedulaUsuario() {
@@ -91,7 +103,9 @@ public class Usuario implements Serializable {
     }
 
     public void setCedulaUsuario(String cedulaUsuario) {
+        String oldCedulaUsuario = this.cedulaUsuario;
         this.cedulaUsuario = cedulaUsuario;
+        changeSupport.firePropertyChange("cedulaUsuario", oldCedulaUsuario, cedulaUsuario);
     }
 
     @XmlTransient
@@ -126,6 +140,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "com.ec.entidades.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

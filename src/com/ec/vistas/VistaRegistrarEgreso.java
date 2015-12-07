@@ -740,6 +740,11 @@ public class VistaRegistrarEgreso extends javax.swing.JInternalFrame {
         jButton1.setText("Guardar");
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Limpiar");
 
@@ -851,10 +856,16 @@ public class VistaRegistrarEgreso extends javax.swing.JInternalFrame {
 
     private void btnNuevoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProveedorActionPerformed
         // TODO add your handling code here:
+            this.dispose();
             RegistrarProveedor objRegistrarProveedor = new RegistrarProveedor();
             desktopPane.add(objRegistrarProveedor);
             objRegistrarProveedor.show();
     }//GEN-LAST:event_btnNuevoProveedorActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    this.isClosed();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -12,7 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,8 +48,9 @@ public class Factura implements Serializable {
     private Date fecha;
     @ManyToMany(mappedBy = "facturaCollection")
     private Collection<Rubro> rubroCollection;
-    @OneToMany(mappedBy = "idFactu")
-    private Collection<Proveedor> proveedorCollection;
+    @JoinColumn(name = "ID_PROVEEDOR", referencedColumnName = "ID_PROVEEDOR")
+    @ManyToOne
+    private Proveedor idProveedor;
     @OneToMany(mappedBy = "idFactu")
     private Collection<Detalle> detalleCollection;
 
@@ -88,13 +91,12 @@ public class Factura implements Serializable {
         this.rubroCollection = rubroCollection;
     }
 
-    @XmlTransient
-    public Collection<Proveedor> getProveedorCollection() {
-        return proveedorCollection;
+    public Proveedor getIdProveedor() {
+        return idProveedor;
     }
 
-    public void setProveedorCollection(Collection<Proveedor> proveedorCollection) {
-        this.proveedorCollection = proveedorCollection;
+    public void setIdProveedor(Proveedor idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
     @XmlTransient
